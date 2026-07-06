@@ -1,0 +1,256 @@
+:root {
+    --teal: rgb(17, 102, 102);
+    --teal-dark: rgb(12, 78, 78);
+    --ink: rgb(20, 20, 22);
+    --panel: #ffffff;
+    --text-muted: rgb(90, 90, 95);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--teal);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;   /* stack children top-to-bottom */
+    align-items: center;      /* center them horizontally */
+    padding: 48px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+h1 {
+    color: #f8f8f8;          /* white — sits on the teal background */
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+    text-align: center;
+}
+
+h2 {
+    color: var(--ink);       /* dark — sits inside the white card */
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+#promptForCode {
+    display: flex;
+    flex-direction: column;
+    width: 820px;
+    max-width: 100%;
+    padding: 28px;
+    background-color: var(--panel);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+#codeInput {
+    width: 100%;
+    min-height: 240px;
+    padding: 14px 16px;
+    background-color: #f7fafa;
+    color: var(--ink);
+    border: 1px solid rgb(210, 220, 220);
+    border-radius: 10px;
+    font-family: "SF Mono", "Fira Code", Consolas, Menlo, monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+#codeInput:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(17, 102, 102, 0.18);
+}
+
+#explainBtn {
+    margin-top: 16px;
+    padding: 12px 20px;
+    background-color: var(--ink);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+#explainBtn:hover {
+    background-color: var(--teal-dark);
+}
+
+#explainBtn:active {
+    transform: translateY(1px);
+}
+
+#explainBtn:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+#result {
+    position: relative;
+    width: 820px;
+    max-width: 100%;
+    margin-top: 20px;
+    padding: 24px 28px 26px;
+    background-color: var(--panel);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    color: var(--ink);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    overflow: hidden;                 /* keep the accent bar inside rounded corners */
+    animation: result-in 0.28s ease both;
+}
+
+/* A teal accent bar across the top, echoing the logo's brackets */
+#result::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--teal), var(--teal-dark));
+}
+
+/* Gentle entrance so the answer eases in rather than snapping */
+@keyframes result-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Collapse it entirely when there's nothing to show */
+#result:empty {
+    display: none;
+}
+
+/* Headings inside the explanation */
+#result h1,
+#result h2,
+#result h3,
+#result h4 {
+    color: var(--ink);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    margin: 22px 0 12px;
+}
+#result > :first-child {
+    margin-top: 0;                    /* no gap above the first line */
+}
+#result h1 { font-size: 1.3rem; }
+#result h2 { font-size: 1.15rem; }
+#result h3 { font-size: 1.05rem; }
+#result h4 { font-size: 0.98rem; color: var(--teal-dark); }
+
+/* Paragraph spacing */
+#result p {
+    margin: 0 0 14px;
+}
+#result p:last-child {
+    margin-bottom: 0;
+}
+
+/* Emphasis */
+#result strong { font-weight: 700; color: var(--ink); }
+#result em     { font-style: italic; }
+
+/* Links pick up the brand teal */
+#result a {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(17, 102, 102, 0.35);
+    transition: border-color 0.15s ease;
+}
+#result a:hover {
+    border-bottom-color: var(--teal);
+}
+
+/* Lists */
+#result ul,
+#result ol {
+    margin: 0 0 14px;
+    padding-left: 1.4em;
+}
+#result li {
+    margin: 4px 0;
+}
+#result li::marker {
+    color: var(--teal);
+}
+
+/* Callout-style quotes */
+#result blockquote {
+    margin: 0 0 14px;
+    padding: 8px 16px;
+    border-left: 3px solid var(--teal);
+    background-color: #f2f8f8;
+    border-radius: 0 8px 8px 0;
+    color: var(--text-muted);
+}
+#result blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Soft divider between sections */
+#result hr {
+    border: none;
+    border-top: 1px solid rgb(224, 232, 232);
+    margin: 20px 0;
+}
+
+/* Tables, in case the explanation lays out data */
+#result table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 14px;
+    font-size: 0.9rem;
+}
+#result th,
+#result td {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgb(224, 232, 232);
+}
+#result th {
+    color: var(--teal-dark);
+    font-weight: 700;
+    border-bottom: 2px solid rgb(210, 220, 220);
+}
+
+/* Inline code + code blocks, matching the textarea's mono treatment */
+#result code {
+    font-family: "SF Mono", "Fira Code", Consolas, Menlo, monospace;
+    font-size: 0.85em;
+    background-color: #f0f5f5;
+    color: var(--teal-dark);
+    padding: 2px 6px;
+    border-radius: 5px;
+}
+#result pre {
+    background-color: #f7fafa;
+    border: 1px solid rgb(210, 220, 220);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 0 0 14px;
+    overflow-x: auto;
+    line-height: 1.5;
+}
+#result pre code {
+    background: none;
+    padding: 0;
+    color: var(--ink);
+    font-size: 0.85rem;
+}
