@@ -9,11 +9,13 @@ button.addEventListener("click", async () => {
   result.textContent = "Explaining..."
   try {
     const code = input.value;                          // what the user typed
+    
+    const language = document.getElementById("language").value;
 
     const response = await fetch("https://explain-my-code-server.onrender.com/explain", {
       method: "POST",                                  // we're SENDING data
       headers: { "Content-Type": "application/json" }, // "this body is JSON"
-      body: JSON.stringify({ code })                   // package the code as JSON
+      body: JSON.stringify({ code, language })                   // package the code as JSON
     });
 
     if (!response.ok) {
